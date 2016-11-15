@@ -14,7 +14,9 @@
       "tsconfig": "tsconfig.json",
       "prefix": "supre",
       "mobile": false,
-      "styles": [],
+      "styles": [
+        "assets/global.scss"
+      ],
       "scripts": [],
       "environments": {
         "source": "environments/environment.ts",

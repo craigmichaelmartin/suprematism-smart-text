@@ -1,3 +1,54 @@
-<h1>
-  {{title}}
-</h1>
+<div class="SmartText" [ngClass]="['is-' + (mode$ | async), 'is-' + supreActionsAlign + 'Aligned']">
+  <div
+      class="SmartText-Display"
+      [ngClass]="'is-' + (displayState$ | async)"
+      (mouseenter)="displayStateSource.next('active')"
+      (mouseleave)="displayStateSource.next('notActive')"
+      (click)="modeSource.next('edit')"
+      (window:resize)="resizeSource.next('resize')"
+  >
+    <div #displayText class="SmartText-DisplayText">
+      <ng-content></ng-content>
+    </div>
+    <div class="SmartText-EditIcon">
+      <div class="SmartText-EditFontIcon ion-edit" (click)="modeSource.next('edit')"></div>
+    </div>
+  </div>
+  <div class="SmartText-Edit"
+    [ngStyle]="{'height': height + 'px', 'padding': offsets && offsets.margin || 0}"
+    [ngClass]="'is-' + (editState$ | async)"
+  >
+    <textarea #editText rows="10"
+        class="SmartText-EditArea"
+        placeholder="{{suprePlaceholder}}"
+        [style.cssText]="cssText | safeStyle"
+        [style.padding]="offsets && offsets.padding || 0"
+        (mouseenter)="editStateSource.next('active')"
+        (mouseleave)="editStateSource.next('notActive')"
+        (keydown)="editKeydown($event)"
+        (keyup)="editKeyup($event)"
+      >{{fullText$ | async}}</textarea>
+    <div class="SmartText-EditingActions" [ngClass]="supreRows == 1 ? 'SmartText-EditingActions--flat' : supreRows">
+      <div class="SmartText-ConfirmIcon"
+          *ngIf="textAreaHasContent || !supreForceValue"
+          (click)="confirmText(editText.value)"
+      >
+        <div class="SmartText-ConfirmFontIcon ion-ios-checkmark"></div>
+      </div>
+      <div class="SmartText-CancelIcon"
+          *ngIf="!!(fullText$ | async) || !supreForceValue"
+          (click)="editStateSource.next('notActive'); modeSource.next('display')"
+      >
+        <div class="SmartText-CancelFontIcon ion-android-cancel"></div>
+      </div>
+    </div>
+  </div>
+  <div style="display: none">
+    <span #substituteShaveChar
+        class="popover SmartText-popover"
+        [suprePopoverBody]='(fullText$ | async)'
+    >{{substituteCharacter}}</span>
+  </div>
+</div>
+<!--
+-->

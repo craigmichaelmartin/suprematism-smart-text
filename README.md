@@ -41,3 +41,10 @@ A component for a smart text.
 <supre-smart-text>
 </supre-smart-text>
 ```
+
+
+
+notes:
+------
+- inline styles aren't carried over with ng-content (i think that's the explanation; inline styles don't show is the problem)
+- rows calc / shave - breaks if padding present

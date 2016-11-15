@@ -1,0 +1,30 @@
+.foobar {
+  color: red;
+  background-color: pink;
+  margin: 10px;
+}
+.bazqux {
+  color: white;
+  background-color: black;
+  padding: 10px;
+  font-weight: 100;
+  text-decoration: underline;
+}
+.example {
+  background-color: white;
+  margin-top: 30px;
+  padding: 10px;
+}
+.example--fullWidth {
+  width: 100%;
+}
+.example--fixed {
+  max-width: 600px;
+}
+.example--percent {
+  max-width: 30%;
+}
+h2 {
+  margin-top: 80px;
+  text-decoration: underline;
+}
