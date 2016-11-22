@@ -7,6 +7,7 @@
   display: block; }
 
 .SmartText-Display {
+  overflow: hidden;
   display: flex;
   border: 1px solid white; }
 
@@ -28,7 +29,8 @@
   visibility: hidden; }
 
 .SmartText.is-bottomAligned .SmartText-EditIcon {
-  text-align: left; }
+  text-align: left;
+  margin-top: 3px; }
 
 .SmartText.is-bottomAligned .SmartText-EditFontIcon {
   display: inline-block; }
@@ -71,13 +73,12 @@
   display: inline-block; }
 
 .SmartText.is-bottomAligned .SmartText-ConfirmIcon:after {
-  content: 'Confirm'; }
+  content: 'Save'; }
 
 .SmartText.is-bottomAligned .SmartText-CancelIcon:after {
   content: 'Cancel'; }
 
 .SmartText-EditArea {
-  font-family: inherit !important;
   box-sizing: border-box !important;
   width: 100% !important;
   overflow: hidden !important;
@@ -102,7 +103,8 @@
   flex-direction: column; }
 
 .SmartText.is-bottomAligned .SmartText-EditingActions {
-  display: inline-block; }
+  display: inline-block;
+  margin-top: 3px; }
 
 .SmartText-EditingActions--flat {
   flex-direction: row; }

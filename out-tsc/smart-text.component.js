@@ -28,7 +28,7 @@ var SmartTextComponent = (function () {
     function SmartTextComponent(ref) {
         var _this = this;
         this.ref = ref;
-        this.supreActionsAlign = 'right';
+        this.supreActionsAlign = 'bottom';
         this.fullTextSource = new Subject_1.Subject();
         this.fullText$ = this.fullTextSource
             .asObservable()
@@ -53,6 +53,13 @@ var SmartTextComponent = (function () {
             .mapTo('active'));
         this.substituteCharacter = ' ...';
     }
+    Object.defineProperty(SmartTextComponent.prototype, "heightOffset", {
+        get: function () {
+            return this.supreActionsAlign === 'right' ? 0 : 3;
+        },
+        enumerable: true,
+        configurable: true
+    });
     // ------ Lifecycle Hooks ---------------------------------------------------
     SmartTextComponent.prototype.ngAfterContentInit = function () {
         var _this = this;
@@ -123,11 +130,11 @@ var SmartTextComponent = (function () {
     };
     SmartTextComponent.prototype.getHeight = function (computedStyles, rows) {
         if (!rows) {
-            return this.nativeEl.offsetHeight;
+            return Math.ceil(this.nativeEl.offsetHeight);
         }
         var fontSize = parseInt(computedStyles.fontSize, 10);
         var lineHeight = parseInt(computedStyles.lineHeight, 10) || 1.2;
-        return rows * fontSize * lineHeight;
+        return Math.ceil(rows * fontSize * lineHeight) + this.heightOffset;
     };
     SmartTextComponent.prototype.getOffsets = function (computedStyles) {
         var topP = parseInt(computedStyles.paddingTop, 10);

@@ -40,6 +40,7 @@ export declare class SmartTextComponent implements AfterContentInit, AfterViewIn
     cssText: any;
     substituteCharacter: string;
     textAreaHasContent: boolean;
+    readonly heightOffset: number;
     constructor(ref: ChangeDetectorRef);
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;
@@ -48,7 +49,7 @@ export declare class SmartTextComponent implements AfterContentInit, AfterViewIn
     protected editKeyup(event: any): void;
     protected shaveText(text: any): void;
     protected setStyleProperties(): void;
-    protected getHeight(computedStyles: any, rows: any): any;
+    protected getHeight(computedStyles: any, rows: any): number;
     protected getOffsets(computedStyles: any): {
         padding: string;
         margin: string;

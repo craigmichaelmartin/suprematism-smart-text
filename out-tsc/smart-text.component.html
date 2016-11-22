@@ -27,7 +27,7 @@
         (mouseleave)="editStateSource.next('notActive')"
         (keydown)="editKeydown($event)"
         (keyup)="editKeyup($event)"
-      >{{fullText$ | async}}</textarea>
+    >{{fullText$ | async}}</textarea>
     <div class="SmartText-EditingActions" [ngClass]="supreRows == 1 ? 'SmartText-EditingActions--flat' : supreRows">
       <div class="SmartText-ConfirmIcon"
           *ngIf="textAreaHasContent || !supreForceValue"
