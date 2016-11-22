@@ -73,7 +73,7 @@
   display: inline-block; }
 
 .SmartText.is-bottomAligned .SmartText-ConfirmIcon:after {
-  content: 'Confirm'; }
+  content: 'Save'; }
 
 .SmartText.is-bottomAligned .SmartText-CancelIcon:after {
   content: 'Cancel'; }
