@@ -15,7 +15,7 @@
     </div>
   </div>
   <div class="SmartText-Edit"
-    [ngStyle]="{'height': height + 'px', 'padding': offsets && offsets.margin || 0}"
+    [ngStyle]="{'padding': offsets && offsets.margin || 0}"
     [ngClass]="'is-' + (editState$ | async)"
   >
     <textarea #editText rows="10"
