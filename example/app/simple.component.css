@@ -8,5 +8,6 @@
 }
 .example {
   margin-left: 30px;
-  width: 425px;
+  width: 33%;
+  min-width: 425px;
 }
