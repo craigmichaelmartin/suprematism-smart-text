@@ -10,6 +10,7 @@ $blue:    #0089d0;
   display: block;
 }
 .SmartText-Display {
+  overflow: hidden;
   display: flex;
   border: 1px solid white;
 }
