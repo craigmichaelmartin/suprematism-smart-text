@@ -162,19 +162,10 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     const rightM = parseInt(computedStyles.marginRight, 10);
     const bottomM = parseInt(computedStyles.marginBottom, 10);
     const leftM = parseInt(computedStyles.marginLeft, 10);
-    if (this.supreActionsAlign === 'right') {
-      return {
-        padding: `${topP}px ${rightP}px ${bottomP}px ${leftP}px`,
-        margin: `${topM}px ${rightM}px ${bottomM}px ${leftM}px`,
-      };
-    }
-    if (this.supreActionsAlign === 'bottom') {
-      return {
-        padding: `${topP}px ${rightP}px ${bottomP}px ${leftP}px`,
-        margin: `0px ${rightM}px ${topM + bottomM}px ${leftM}px`,
-      };
-    }
-    throw 'huh';
+    return {
+      padding: `${topP}px ${rightP}px ${bottomP}px ${leftP}px`,
+      margin: `${topM}px ${rightM}px ${bottomM}px ${leftM}px`,
+    };
   }
 
   protected getCssText(computedStyles, el, height) {

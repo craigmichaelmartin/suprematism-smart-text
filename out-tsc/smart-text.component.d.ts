@@ -1,0 +1,32 @@
+import { AfterContentInit, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/operator/combineLatest';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/delay';
+export declare class SmartTextComponent implements AfterContentInit {
+    protected ref: ChangeDetectorRef;
+    el: ElementRef;
+    substituteShaveChar: ElementRef;
+    supreRows: number;
+    nativeEl: any;
+    fullTextSource: Subject<string>;
+    fullText$: Observable<string>;
+    resizeSource: Subject<"resize">;
+    resize$: Observable<'resize'>;
+    displayStateSource: Subject<"active" | "notActive">;
+    displayState$: Observable<'active' | 'notActive'>;
+    editStateSource: Subject<"active" | "notActive">;
+    editState$: Observable<'active' | 'notActive'>;
+    modeSource: Subject<{}>;
+    mode$: any;
+    height: any;
+    offsets: any;
+    cssText: any;
+    substituteCharacter: string;
+    constructor(ref: ChangeDetectorRef);
+    ngAfterContentInit(): void;
+    shaveText(text: any): void;
+    getStylesTuple(): (string | number)[];
+}

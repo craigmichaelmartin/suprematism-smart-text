@@ -1,0 +1,57 @@
+:host {
+  display: block; }
+
+.SmartText-Display {
+  display: flex;
+  align-items: center;
+  border: 1px solid white; }
+
+.SmartText-Display.is-active {
+  border: 1px dotted #cccccc;
+  background-color: white;
+  color: #0089d0; }
+
+.SmartText-DisplayIcon {
+  cursor: pointer;
+  visibility: hidden;
+  width: 40px;
+  text-align: center; }
+
+.SmartText.is-display .SmartText-Display.is-active .SmartText-DisplayIcon {
+  visibility: visible; }
+
+.SmartText-Edit {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #cccccc;
+  background-color: white; }
+
+.SmartText-Edit.is-active {
+  border: 1px solid #0089d0; }
+
+.SmartText-EditArea {
+  font-family: inherit !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  overflow: hidden !important;
+  resize: none !important;
+  background-color: white !important;
+  padding-right: 40px !important; }
+
+.SmartText-EditArea:focus {
+  border: 1px solid #0089d0;
+  box-shadow: none;
+  outline: none; }
+
+.SmartText.is-edit .SmartText-Display {
+  visibility: hidden;
+  height: 0px; }
+
+.SmartText.is-display .SmartText-Edit {
+  display: none; }
+
+.SmartText-popover * {
+  color: black !important; }
+
+.popover-content {
+  color: black !important; }

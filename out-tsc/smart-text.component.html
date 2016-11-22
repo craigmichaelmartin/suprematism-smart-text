@@ -1,0 +1,33 @@
+<div class="SmartText" [ngClass]="'is-' + (mode$ | async)">
+  <div
+      class="SmartText-Display"
+      (blur)="console($event)"
+      [ngClass]="'is-' + (displayState$ | async)"
+      (mouseenter)="displayStateSource.next('active')"
+      (mouseleave)="displayStateSource.next('notActive')"
+      (window:resize)="resizeSource.next('resize')">
+    <div #displayText>
+      <ng-content></ng-content>
+    </div>
+    <div class="SmartText-DisplayIcon">
+      <div class="ion-edit" (click)="modeSource.next('edit')"></div>
+    </div>
+  </div>
+  <div class="SmartText-Edit"
+    [ngStyle]="{'height': height + 'px', 'padding': offsets}"
+    [ngClass]="'is-' + (editState$ | async)"
+    (mouseenter)="editStateSource.next('active')"
+    (mouseleave)="editStateSource.next('notActive'); modeSource.next('display')"
+  >
+    <textarea #editText
+        class="SmartText-EditArea" rows="2"
+        [style.cssText]="cssText | safe: 'style'"
+        (keyup)="fullTextSource.next($event.target.value)"
+      >{{fullText$ | async}}</textarea>
+  </div>
+  <span suprePopoverBody="test popover in general">popover</span>
+  <span #substituteShaveChar
+      class="popover SmartText-popover"
+      [suprePopoverBody]='(fullText$ | async)'
+  >{{substituteCharacter}}</span>
+</div>
