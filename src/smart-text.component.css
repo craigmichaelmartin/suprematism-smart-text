@@ -6,10 +6,15 @@
 :host {
   display: block; }
 
-.SmartText.is-rightAligned .SmartText-Display {
+.SmartText-Display {
   display: flex;
-  align-items: center;
   border: 1px solid white; }
+
+.SmartText.is-rightAligned .SmartText-Display {
+  align-items: center; }
+
+.SmartText.is-bottomAligned .SmartText-Display {
+  flex-direction: column; }
 
 .SmartText-Display.is-active {
   color: #0089d0;
