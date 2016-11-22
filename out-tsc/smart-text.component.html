@@ -1,33 +1,54 @@
-<div class="SmartText" [ngClass]="'is-' + (mode$ | async)">
+<div class="SmartText" [ngClass]="['is-' + (mode$ | async), 'is-' + supreActionsAlign + 'Aligned']">
   <div
       class="SmartText-Display"
-      (blur)="console($event)"
       [ngClass]="'is-' + (displayState$ | async)"
       (mouseenter)="displayStateSource.next('active')"
       (mouseleave)="displayStateSource.next('notActive')"
-      (window:resize)="resizeSource.next('resize')">
-    <div #displayText>
+      (click)="modeSource.next('edit')"
+      (window:resize)="resizeSource.next('resize')"
+  >
+    <div #displayText class="SmartText-DisplayText">
       <ng-content></ng-content>
     </div>
-    <div class="SmartText-DisplayIcon">
-      <div class="ion-edit" (click)="modeSource.next('edit')"></div>
+    <div class="SmartText-EditIcon">
+      <div class="SmartText-EditFontIcon ion-edit" (click)="modeSource.next('edit')"></div>
     </div>
   </div>
   <div class="SmartText-Edit"
-    [ngStyle]="{'height': height + 'px', 'padding': offsets}"
+    [ngStyle]="{'padding': offsets && offsets.margin || 0}"
     [ngClass]="'is-' + (editState$ | async)"
-    (mouseenter)="editStateSource.next('active')"
-    (mouseleave)="editStateSource.next('notActive'); modeSource.next('display')"
   >
-    <textarea #editText
-        class="SmartText-EditArea" rows="2"
-        [style.cssText]="cssText | safe: 'style'"
-        (keyup)="fullTextSource.next($event.target.value)"
+    <textarea #editText rows="10"
+        class="SmartText-EditArea"
+        placeholder="{{suprePlaceholder}}"
+        [style.cssText]="cssText | safeStyle"
+        [style.padding]="offsets && offsets.padding || 0"
+        (mouseenter)="editStateSource.next('active')"
+        (mouseleave)="editStateSource.next('notActive')"
+        (keydown)="editKeydown($event)"
+        (keyup)="editKeyup($event)"
       >{{fullText$ | async}}</textarea>
+    <div class="SmartText-EditingActions" [ngClass]="supreRows == 1 ? 'SmartText-EditingActions--flat' : supreRows">
+      <div class="SmartText-ConfirmIcon"
+          *ngIf="textAreaHasContent || !supreForceValue"
+          (click)="confirmText(editText.value)"
+      >
+        <div class="SmartText-ConfirmFontIcon ion-ios-checkmark"></div>
+      </div>
+      <div class="SmartText-CancelIcon"
+          *ngIf="!!(fullText$ | async) || !supreForceValue"
+          (click)="editStateSource.next('notActive'); modeSource.next('display')"
+      >
+        <div class="SmartText-CancelFontIcon ion-android-cancel"></div>
+      </div>
+    </div>
   </div>
-  <span suprePopoverBody="test popover in general">popover</span>
-  <span #substituteShaveChar
-      class="popover SmartText-popover"
-      [suprePopoverBody]='(fullText$ | async)'
-  >{{substituteCharacter}}</span>
+  <div style="display: none">
+    <span #substituteShaveChar
+        class="popover SmartText-popover"
+        [suprePopoverBody]='(fullText$ | async)'
+    >{{substituteCharacter}}</span>
+  </div>
 </div>
+<!--
+-->

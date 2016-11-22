@@ -1,50 +1,119 @@
+/* 
+   NOTE: The text area mirrors the original element by
+   copying it's styles inline. Thus, to style it here,
+   the styles must be postfixed !important.
+*/
 :host {
   display: block; }
 
 .SmartText-Display {
   display: flex;
-  align-items: center;
   border: 1px solid white; }
 
+.SmartText.is-rightAligned .SmartText-Display {
+  align-items: center; }
+
+.SmartText.is-bottomAligned .SmartText-Display {
+  flex-direction: column; }
+
 .SmartText-Display.is-active {
-  border: 1px dotted #cccccc;
-  background-color: white;
-  color: #0089d0; }
+  color: #0089d0;
+  -webkit-text-fill-color: #0089d0; }
 
-.SmartText-DisplayIcon {
+.SmartText-DisplayText {
+  width: 100% !important; }
+
+.SmartText-EditIcon {
   cursor: pointer;
-  visibility: hidden;
-  width: 40px;
-  text-align: center; }
+  visibility: hidden; }
 
-.SmartText.is-display .SmartText-Display.is-active .SmartText-DisplayIcon {
+.SmartText.is-bottomAligned .SmartText-EditIcon {
+  text-align: left; }
+
+.SmartText.is-bottomAligned .SmartText-EditFontIcon {
+  display: inline-block; }
+
+.SmartText.is-bottomAligned .SmartText-EditIcon:after {
+  content: 'Edit'; }
+
+.SmartText.is-rightAligned .SmartText-EditIcon {
+  text-align: center;
+  flex-basis: 30px;
+  flex-grow: 0;
+  flex-shrink: 0; }
+
+.SmartText.is-display .SmartText-Display.is-active .SmartText-EditIcon {
   visibility: visible; }
 
 .SmartText-Edit {
-  width: 100%;
-  overflow: hidden;
-  border: 1px solid #cccccc;
-  background-color: white; }
+  overflow: hidden; }
 
-.SmartText-Edit.is-active {
-  border: 1px solid #0089d0; }
+.SmartText.is-rightAligned .SmartText-Edit {
+  display: flex;
+  align-items: center; }
+
+.SmartText.is-bottomAligned .SmartText-Edit {
+  text-align: left; }
+
+.SmartText-CancelIcon,
+.SmartText-ConfirmIcon {
+  cursor: pointer;
+  color: #0089d0; }
+
+.SmartText.is-rightAligned .SmartText-CancelIcon,
+.SmartText.is-rightAligned .SmartText-ConfirmIcon {
+  text-align: center; }
+
+.SmartText.is-bottomAligned .SmartText-ConfirmIcon,
+.SmartText.is-bottomAligned .SmartText-ConfirmFontIcon,
+.SmartText.is-bottomAligned .SmartText-CancelIcon,
+.SmartText.is-bottomAligned .SmartText-CancelFontIcon {
+  display: inline-block; }
+
+.SmartText.is-bottomAligned .SmartText-ConfirmIcon:after {
+  content: 'Confirm'; }
+
+.SmartText.is-bottomAligned .SmartText-CancelIcon:after {
+  content: 'Cancel'; }
 
 .SmartText-EditArea {
   font-family: inherit !important;
   box-sizing: border-box !important;
   width: 100% !important;
   overflow: hidden !important;
-  resize: none !important;
-  background-color: white !important;
-  padding-right: 40px !important; }
+  resize: none !important; }
+
+.SmartText-Edit.is-notActive .SmartText-EditArea {
+  border: 1px solid #cccccc !important; }
+
+.SmartText-Edit.is-active .SmartText-EditArea {
+  border: 1px solid #0089d0 !important; }
 
 .SmartText-EditArea:focus {
   border: 1px solid #0089d0;
   box-shadow: none;
   outline: none; }
 
+.SmartText.is-rightAligned .SmartText-EditingActions {
+  display: flex;
+  flex-basis: 30px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-direction: column; }
+
+.SmartText.is-bottomAligned .SmartText-EditingActions {
+  display: inline-block; }
+
+.SmartText-EditingActions--flat {
+  flex-direction: row; }
+
+.SmartText-EditingActions--flat .SmartText-ConfirmIcon {
+  margin-left: 2px;
+  margin-right: 2px; }
+
 .SmartText.is-edit .SmartText-Display {
   visibility: hidden;
+  border-width: 0px;
   height: 0px; }
 
 .SmartText.is-display .SmartText-Edit {
@@ -55,3 +124,6 @@
 
 .popover-content {
   color: black !important; }
+
+::-webkit-input-placeholder {
+  opacity: .5; }

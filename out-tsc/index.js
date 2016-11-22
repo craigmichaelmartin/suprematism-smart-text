@@ -28,7 +28,7 @@ var SmartTextModule = (function () {
             ],
             declarations: [
                 smart_text_component_1.SmartTextComponent,
-                safe_pipe_1.SafePipe,
+                safe_pipe_1.SafeStylePipe,
             ],
             exports: [
                 smart_text_component_1.SmartTextComponent,

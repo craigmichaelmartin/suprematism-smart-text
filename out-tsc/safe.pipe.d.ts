@@ -1,10 +1,27 @@
 import { PipeTransform } from '@angular/core';
-import { DomSanitizer, SafeHtml, SafeStyle } from '@angular/platform-browser';
-export declare type BypassKindType = 'html' | 'style';
-export declare type TransformReturnType = SafeStyle | SafeHtml;
-export declare class SafePipe implements PipeTransform {
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+export declare class SafeHtmlPipe implements PipeTransform {
     private sanitizer;
-    bypassMap: Map<string, (value: string) => SafeHtml>;
     constructor(sanitizer: DomSanitizer);
-    transform(value: string, bypassKind: BypassKindType): TransformReturnType;
+    transform(html: string): SafeHtml;
+}
+export declare class SafeStylePipe implements PipeTransform {
+    private sanitizer;
+    constructor(sanitizer: DomSanitizer);
+    transform(style: string): SafeStyle;
+}
+export declare class SafeScriptPipe implements PipeTransform {
+    private sanitizer;
+    constructor(sanitizer: DomSanitizer);
+    transform(script: string): SafeScript;
+}
+export declare class SafeUrlPipe implements PipeTransform {
+    private sanitizer;
+    constructor(sanitizer: DomSanitizer);
+    transform(url: string): SafeUrl;
+}
+export declare class SafeResourceUrlPipe implements PipeTransform {
+    private sanitizer;
+    constructor(sanitizer: DomSanitizer);
+    transform(resourceUrl: string): SafeResourceUrl;
 }

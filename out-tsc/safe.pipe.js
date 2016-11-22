@@ -10,22 +10,74 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
-var SafePipe = (function () {
-    function SafePipe(sanitizer) {
+var SafeHtmlPipe = (function () {
+    function SafeHtmlPipe(sanitizer) {
         this.sanitizer = sanitizer;
-        this.bypassMap = new Map([
-            ['html', this.sanitizer.bypassSecurityTrustHtml],
-            ['style', this.sanitizer.bypassSecurityTrustStyle],
-        ]);
     }
-    SafePipe.prototype.transform = function (value, bypassKind) {
-        return this.bypassMap.get(bypassKind)(value);
+    SafeHtmlPipe.prototype.transform = function (html) {
+        return this.sanitizer.bypassSecurityTrustHtml(html);
     };
-    SafePipe = __decorate([
-        core_1.Pipe({ name: 'safe' }), 
+    SafeHtmlPipe = __decorate([
+        core_1.Pipe({ name: 'safeHtml' }), 
         __metadata('design:paramtypes', [platform_browser_1.DomSanitizer])
-    ], SafePipe);
-    return SafePipe;
+    ], SafeHtmlPipe);
+    return SafeHtmlPipe;
 }());
-exports.SafePipe = SafePipe;
+exports.SafeHtmlPipe = SafeHtmlPipe;
+var SafeStylePipe = (function () {
+    function SafeStylePipe(sanitizer) {
+        this.sanitizer = sanitizer;
+    }
+    SafeStylePipe.prototype.transform = function (style) {
+        return this.sanitizer.bypassSecurityTrustStyle(style);
+    };
+    SafeStylePipe = __decorate([
+        core_1.Pipe({ name: 'safeStyle' }), 
+        __metadata('design:paramtypes', [platform_browser_1.DomSanitizer])
+    ], SafeStylePipe);
+    return SafeStylePipe;
+}());
+exports.SafeStylePipe = SafeStylePipe;
+var SafeScriptPipe = (function () {
+    function SafeScriptPipe(sanitizer) {
+        this.sanitizer = sanitizer;
+    }
+    SafeScriptPipe.prototype.transform = function (script) {
+        return this.sanitizer.bypassSecurityTrustScript(script);
+    };
+    SafeScriptPipe = __decorate([
+        core_1.Pipe({ name: 'safeScript' }), 
+        __metadata('design:paramtypes', [platform_browser_1.DomSanitizer])
+    ], SafeScriptPipe);
+    return SafeScriptPipe;
+}());
+exports.SafeScriptPipe = SafeScriptPipe;
+var SafeUrlPipe = (function () {
+    function SafeUrlPipe(sanitizer) {
+        this.sanitizer = sanitizer;
+    }
+    SafeUrlPipe.prototype.transform = function (url) {
+        return this.sanitizer.bypassSecurityTrustUrl(url);
+    };
+    SafeUrlPipe = __decorate([
+        core_1.Pipe({ name: 'safeUrl' }), 
+        __metadata('design:paramtypes', [platform_browser_1.DomSanitizer])
+    ], SafeUrlPipe);
+    return SafeUrlPipe;
+}());
+exports.SafeUrlPipe = SafeUrlPipe;
+var SafeResourceUrlPipe = (function () {
+    function SafeResourceUrlPipe(sanitizer) {
+        this.sanitizer = sanitizer;
+    }
+    SafeResourceUrlPipe.prototype.transform = function (resourceUrl) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(resourceUrl);
+    };
+    SafeResourceUrlPipe = __decorate([
+        core_1.Pipe({ name: 'safeScript' }), 
+        __metadata('design:paramtypes', [platform_browser_1.DomSanitizer])
+    ], SafeResourceUrlPipe);
+    return SafeResourceUrlPipe;
+}());
+exports.SafeResourceUrlPipe = SafeResourceUrlPipe;
 //# sourceMappingURL=/Users/craigmartin/projects/suprematism-smart-text/src/safe.pipe.js.map
