@@ -33,6 +33,7 @@ $blue:    #0089d0;
 }
 .SmartText.is-bottomAligned .SmartText-EditIcon {
   text-align: left;
+  margin-top: 3px;
 }
 .SmartText.is-bottomAligned .SmartText-EditFontIcon {
   display: inline-block;
@@ -107,6 +108,7 @@ $blue:    #0089d0;
 }
 .SmartText.is-bottomAligned .SmartText-EditingActions {
   display: inline-block;
+  margin-top: 3px;
 }
 .SmartText-EditingActions--flat {
   flex-direction: row;

@@ -29,7 +29,8 @@
   visibility: hidden; }
 
 .SmartText.is-bottomAligned .SmartText-EditIcon {
-  text-align: left; }
+  text-align: left;
+  margin-top: 3px; }
 
 .SmartText.is-bottomAligned .SmartText-EditFontIcon {
   display: inline-block; }
@@ -102,7 +103,8 @@
   flex-direction: column; }
 
 .SmartText.is-bottomAligned .SmartText-EditingActions {
-  display: inline-block; }
+  display: inline-block;
+  margin-top: 3px; }
 
 .SmartText-EditingActions--flat {
   flex-direction: row; }

@@ -68,6 +68,9 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
   cssText: any;
   substituteCharacter = ' ...';
   textAreaHasContent: boolean;
+  get heightOffset() {
+    return this.supreActionsAlign === 'right' ? 0 : 3;
+  }
 
 
   // ------ Constructor ------------------------------------------------------
@@ -146,11 +149,11 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
 
   protected getHeight(computedStyles, rows) {
     if (!rows) {
-      return this.nativeEl.offsetHeight;
+      return Math.ceil(this.nativeEl.offsetHeight);
     }
     const fontSize = parseInt(computedStyles.fontSize, 10);
     const lineHeight = parseInt(computedStyles.lineHeight, 10) || 1.2;
-    return rows * fontSize * lineHeight;
+    return Math.ceil(rows * fontSize * lineHeight) + this.heightOffset;
   }
 
   protected getOffsets(computedStyles) {
