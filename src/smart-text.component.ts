@@ -1,5 +1,5 @@
 import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component,
-  ElementRef, Input, ViewChild } from '@angular/core';
+  ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
@@ -33,6 +33,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
   @Input() supreForceValue: boolean;
   @Input() supreActionsAlign = 'bottom';
   @Input() supreIsEditable = true;
+  @Output() textUpdated = new EventEmitter();
   nativeEl: any;
   fullTextSource = new Subject<string>();
   fullText$: Observable<string> = this.fullTextSource
@@ -93,10 +94,15 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     const initialText = this.nativeEl.textContent.trim();
     this.textAreaHasContent = !!initialText;
     this.confirmText(initialText);
+    this.fullText$.subscribe(this.updatedText.bind(this));
   }
 
 
   // ------ Protected Methods -------------------------------------------------
+
+  protected updatedText(text) {
+    this.textUpdated.emit(text);
+  }
 
   protected confirmText(text) {
     this.fullTextSource.next(text);
