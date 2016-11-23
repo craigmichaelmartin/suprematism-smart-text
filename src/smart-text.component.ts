@@ -120,13 +120,13 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
   }
 
   protected shaveText(text) {
+    this.nativeEl.textContent = text;
     if (!this.supreRows) {
       return;
     }
     const options = {
       character: this.substituteCharacter
     };
-    this.nativeEl.textContent = text;
     shave(this.nativeEl, this.height, options);
     const shaveCharNativeEl = this.nativeEl.querySelector('.js-shave-char');
     let subShaveCharNativeEl = this.substituteShaveChar.nativeElement;
