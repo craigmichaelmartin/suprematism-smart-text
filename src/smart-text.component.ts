@@ -1,18 +1,13 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component, ElementRef, Input,
-  ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component,
+  ElementRef, Input, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/observable/interval';
-
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/merge';
-import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/withLatestFrom';
 const shave = require('shave');
 
@@ -50,7 +45,6 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
       return (this.supreForceValue && !text) ? 'edit' : mode;
     })
     .startWith('display');
-
   resizeSource = new Subject<'resize'>();
   resize$: Observable<'resize'> = this.resizeSource.asObservable();
   displayStateSource = new Subject<ActiveType>();
@@ -101,14 +95,14 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     this.confirmText(initialText);
   }
 
-  public confirmText(text) {
+
+  // ------ Protected Methods -------------------------------------------------
+
+  protected confirmText(text) {
     this.fullTextSource.next(text);
     this.editStateSource.next('notActive');
     this.modeSource.next('display');
   }
-
-
-  // ------ Protected Methods -------------------------------------------------
 
   protected editKeydown(event) {
     if (event.keyCode === ENTER) {
@@ -158,17 +152,9 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
   }
 
   protected getOffsets(computedStyles) {
-    const topP = parseInt(computedStyles.paddingTop, 10);
-    const rightP = parseInt(computedStyles.paddingRight, 10);
-    const bottomP = parseInt(computedStyles.paddingBottom, 10);
-    const leftP = parseInt(computedStyles.paddingLeft, 10);
-    const topM = parseInt(computedStyles.marginTop, 10);
-    const rightM = parseInt(computedStyles.marginRight, 10);
-    const bottomM = parseInt(computedStyles.marginBottom, 10);
-    const leftM = parseInt(computedStyles.marginLeft, 10);
     return {
-      padding: `${topP}px ${rightP}px ${bottomP}px ${leftP}px`,
-      margin: `${topM}px ${rightM}px ${bottomM}px ${leftM}px`,
+      padding: computedStyles.padding,
+      margin: computedStyles.margin
     };
   }
 
