@@ -2,9 +2,9 @@
   <div
       class="SmartText-Display"
       [ngClass]="'is-' + (displayState$ | async)"
-      (mouseenter)="displayStateSource.next('active')"
-      (mouseleave)="displayStateSource.next('notActive')"
-      (click)="modeSource.next('edit')"
+      (mouseenter)="supreIsEditable && displayStateSource.next('active')"
+      (mouseleave)="supreIsEditable && displayStateSource.next('notActive')"
+      (click)="supreIsEditable && modeSource.next('edit')"
       (window:resize)="resizeSource.next('resize')"
   >
     <div #displayText class="SmartText-DisplayText">

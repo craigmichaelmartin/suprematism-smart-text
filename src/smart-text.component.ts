@@ -37,6 +37,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
   @Input() supreDefaultText: string;
   @Input() supreForceValue: boolean;
   @Input() supreActionsAlign = 'bottom';
+  @Input() supreIsEditable = true;
   nativeEl: any;
   fullTextSource = new Subject<string>();
   fullText$: Observable<string> = this.fullTextSource
