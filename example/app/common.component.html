@@ -1,0 +1,62 @@
+<div style="background-color: lightgray; padding: 20px 60px">
+
+  <h3> Rows (specify number of rows, using ellipsis for overflow) </h3>
+  <div class="example">
+    <supre-smart-text [supreIsEditable]="false" supreRows="2">
+      <div class="header"> {{longTitle}} </div>
+    </supre-smart-text>
+    <span class="example-notes"> {{belowText}} </span>
+  </div>
+
+  <h3> Rows + Editable </h3>
+  <div class="example">
+    <supre-smart-text [supreIsEditable]="true" supreRows="2">
+      <div class="header"> {{longTitle}} </div>
+    </supre-smart-text>
+    <span class="example-notes"> {{belowText}} </span>
+  </div>
+
+  <h3> Rows + Editable + Placeholder </h3>
+  <div class="example">
+    <supre-smart-text [supreIsEditable]="true" supreRows="2"
+       suprePlaceholder="{{placeholderText}}"
+    >
+      <div class="header"> {{longTitle}} </div>
+    </supre-smart-text>
+    <span class="example-notes"> {{belowText}} </span>
+  </div>
+
+  <h3> Rows + Editable + Placeholder + Default</h3>
+  <div class="example">
+    <supre-smart-text [supreIsEditable]="true" supreRows="2"
+        suprePlaceholder="{{placeholderText}}"
+        supreDefaultText="{{defaultText}}"
+    >
+      <div class="header"> {{longTitle}} </div>
+    </supre-smart-text>
+    <span class="example-notes"> {{belowText}} </span>
+  </div>
+  
+  <h3> Rows + Editable + Placeholder + Forced</h3>
+  <div class="example">
+    <supre-smart-text [supreIsEditable]="true" supreRows="2"
+        suprePlaceholder="{{placeholderText}}"
+        supreForceValue="true"
+    >
+      <div class="header"> {{longTitle}} </div>
+    </supre-smart-text>
+    <span class="example-notes"> {{belowText}} </span>
+  </div>
+
+  <h3> Rows + Editable + Placeholder + Forced with no initial value</h3>
+  <div class="example">
+    <supre-smart-text [supreIsEditable]="true" supreRows="2"
+        suprePlaceholder="{{placeholderText}}"
+        supreForceValue="true"
+    >
+      <div class="header"></div>
+    </supre-smart-text>
+    <span class="example-notes"> {{belowText}} </span>
+  </div>
+
+</div>

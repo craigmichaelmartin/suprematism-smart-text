@@ -5,16 +5,22 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { OverviewComponent } from './overview.component';
 import { AllComponent } from './all.component';
+import { CommonComponent } from './common.component';
 import { SimpleComponent } from './simple.component';
-import { DefaultComponent } from './default.component';
-import { ForcedValueComponent } from './forced-value.component';
+import { StaticComponent } from './static.component';
+import { DefaultComponent, DefaultStartEmptyComponent } from './default.component';
+import { ForcedValueComponent, ForcedValueStartEmptyComponent } from './forced-value.component';
 import { SmartTextModule } from '../../src/index';
 
 const routes = [
   { path: '', component: OverviewComponent },
+  { path: 'static', component: StaticComponent },
   { path: 'simple', component: SimpleComponent },
   { path: 'default', component: DefaultComponent},
+  { path: 'default-empty', component: DefaultStartEmptyComponent},
   { path: 'forced-value', component: ForcedValueComponent },
+  { path: 'forced-value-empty', component: ForcedValueStartEmptyComponent },
+  { path: 'common', component: CommonComponent },
   { path: 'all', component: AllComponent }
 ];
 
@@ -22,9 +28,13 @@ const routes = [
   declarations: [
     AppComponent,
     AllComponent,
+    CommonComponent,
     SimpleComponent,
+    StaticComponent,
     DefaultComponent,
+    DefaultStartEmptyComponent,
     ForcedValueComponent,
+    ForcedValueStartEmptyComponent,
     OverviewComponent
   ],
   imports: [

@@ -1,9 +1,9 @@
 <div class="fake-navbar"></div>
 <div class="example">
   <supre-smart-text supreRows=2 suprePlaceholder="Please enter blah blah" supreDefaultText="Automated Splendidly Awesome Default Title (1)">
-    <div class="header"></div>
+    <div class="header">{{text}}</div>
   </supre-smart-text>
   <div class="example-notes">
-    Just some notes which doubles as example text underneath the component. NOTES: In addition to the simple options (editable text, placeholder text if empty, specify number of rows (using ellipsis with popover for overflow)), this "default" example provided a default value whenever the input is confirmed empty (eg, if the title is backspaced completely, and then confirmed, the title will be saved with the default value). The component can be initialized WITHOUT (as above) or WITH a starting text.
+    {{notes}}
   </div>
 </div>

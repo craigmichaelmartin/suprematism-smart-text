@@ -6,4 +6,16 @@ declare var require: any;
   template: require('./forced-value.component.html'),
   styles: [require('./simple.component.css')]
 })
-export class ForcedValueComponent {}
+export class ForcedValueStartEmptyComponent {
+    text = '';
+    notes = 'Just some notes which doubles as example text underneath the component. FEATURES: Rows + Editable + Placeholder + Forced (with no initial text)';
+}
+
+@Component({
+  template: require('./forced-value.component.html'),
+  styles: [require('./simple.component.css')]
+})
+export class ForcedValueComponent {
+    text = 'I ponder of something great. My lungs will fill and deflate. They fill with fire, exhale desire. I know it is dire my time today.';
+    notes = 'Just some notes which doubles as example text underneath the component. FEATURES: Rows + Editable + Placeholder + Forced (with no initial text)';
+}
