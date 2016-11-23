@@ -1,16 +1,12 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/observable/merge';
-import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/merge';
-import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/withLatestFrom';
 export declare type ActiveType = 'active' | 'notActive';
 export declare type ModeType = 'display' | 'edit';
@@ -24,6 +20,8 @@ export declare class SmartTextComponent implements AfterContentInit, AfterViewIn
     supreDefaultText: string;
     supreForceValue: boolean;
     supreActionsAlign: string;
+    supreIsEditable: boolean;
+    textUpdated: EventEmitter<{}>;
     nativeEl: any;
     fullTextSource: Subject<string>;
     fullText$: Observable<string>;
@@ -44,15 +42,16 @@ export declare class SmartTextComponent implements AfterContentInit, AfterViewIn
     constructor(ref: ChangeDetectorRef);
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;
-    confirmText(text: any): void;
+    protected updatedText(text: any): void;
+    protected confirmText(text: any): void;
     protected editKeydown(event: any): void;
     protected editKeyup(event: any): void;
     protected shaveText(text: any): void;
     protected setStyleProperties(): void;
     protected getHeight(computedStyles: any, rows: any): number;
     protected getOffsets(computedStyles: any): {
-        padding: string;
-        margin: string;
+        padding: any;
+        margin: any;
     };
     protected getCssText(computedStyles: any, el: any, height: any): any;
 }
