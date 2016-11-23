@@ -10,16 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var Subject_1 = require('rxjs/Subject');
-require('rxjs/add/observable/merge');
-require('rxjs/add/observable/interval');
 require('rxjs/add/operator/startWith');
 require('rxjs/add/operator/combineLatest');
 require('rxjs/add/operator/map');
 require('rxjs/add/operator/mapTo');
 require('rxjs/add/operator/merge');
-require('rxjs/add/operator/take');
 require('rxjs/add/operator/filter');
-require('rxjs/add/operator/do');
 require('rxjs/add/operator/withLatestFrom');
 var shave = require('shave');
 var ENTER = 13;
@@ -29,6 +25,8 @@ var SmartTextComponent = (function () {
         var _this = this;
         this.ref = ref;
         this.supreActionsAlign = 'bottom';
+        this.supreIsEditable = true;
+        this.textUpdated = new core_1.EventEmitter();
         this.fullTextSource = new Subject_1.Subject();
         this.fullText$ = this.fullTextSource
             .asObservable()
@@ -86,13 +84,17 @@ var SmartTextComponent = (function () {
         var initialText = this.nativeEl.textContent.trim();
         this.textAreaHasContent = !!initialText;
         this.confirmText(initialText);
+        this.fullText$.subscribe(this.updatedText.bind(this));
+    };
+    // ------ Protected Methods -------------------------------------------------
+    SmartTextComponent.prototype.updatedText = function (text) {
+        this.textUpdated.emit(text);
     };
     SmartTextComponent.prototype.confirmText = function (text) {
         this.fullTextSource.next(text);
         this.editStateSource.next('notActive');
         this.modeSource.next('display');
     };
-    // ------ Protected Methods -------------------------------------------------
     SmartTextComponent.prototype.editKeydown = function (event) {
         if (event.keyCode === ENTER) {
             this.confirmText(event.target.value);
@@ -102,13 +104,13 @@ var SmartTextComponent = (function () {
         this.textAreaHasContent = !!event.target.value;
     };
     SmartTextComponent.prototype.shaveText = function (text) {
+        this.nativeEl.textContent = text;
         if (!this.supreRows) {
             return;
         }
         var options = {
             character: this.substituteCharacter
         };
-        this.nativeEl.textContent = text;
         shave(this.nativeEl, this.height, options);
         var shaveCharNativeEl = this.nativeEl.querySelector('.js-shave-char');
         var subShaveCharNativeEl = this.substituteShaveChar.nativeElement;
@@ -134,20 +136,15 @@ var SmartTextComponent = (function () {
         }
         var fontSize = parseInt(computedStyles.fontSize, 10);
         var lineHeight = parseInt(computedStyles.lineHeight, 10) || 1.2;
-        return Math.ceil(rows * fontSize * lineHeight) + this.heightOffset;
+        var paddingTop = parseInt(computedStyles.paddingTop, 10) || 0;
+        var paddingBottom = parseInt(computedStyles.paddingBottom, 10) || 0;
+        return Math.ceil(rows * fontSize * lineHeight) +
+            Math.ceil(paddingTop + paddingBottom) + this.heightOffset;
     };
     SmartTextComponent.prototype.getOffsets = function (computedStyles) {
-        var topP = parseInt(computedStyles.paddingTop, 10);
-        var rightP = parseInt(computedStyles.paddingRight, 10);
-        var bottomP = parseInt(computedStyles.paddingBottom, 10);
-        var leftP = parseInt(computedStyles.paddingLeft, 10);
-        var topM = parseInt(computedStyles.marginTop, 10);
-        var rightM = parseInt(computedStyles.marginRight, 10);
-        var bottomM = parseInt(computedStyles.marginBottom, 10);
-        var leftM = parseInt(computedStyles.marginLeft, 10);
         return {
-            padding: topP + "px " + rightP + "px " + bottomP + "px " + leftP + "px",
-            margin: topM + "px " + rightM + "px " + bottomM + "px " + leftM + "px",
+            padding: computedStyles.padding,
+            margin: computedStyles.margin
         };
     };
     SmartTextComponent.prototype.getCssText = function (computedStyles, el, height) {
@@ -191,6 +188,14 @@ var SmartTextComponent = (function () {
         core_1.Input(), 
         __metadata('design:type', Object)
     ], SmartTextComponent.prototype, "supreActionsAlign", void 0);
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], SmartTextComponent.prototype, "supreIsEditable", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], SmartTextComponent.prototype, "textUpdated", void 0);
     SmartTextComponent = __decorate([
         core_1.Component({
             selector: 'supre-smart-text',
