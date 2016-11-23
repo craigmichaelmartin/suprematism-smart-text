@@ -154,7 +154,10 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     }
     const fontSize = parseInt(computedStyles.fontSize, 10);
     const lineHeight = parseInt(computedStyles.lineHeight, 10) || 1.2;
-    return Math.ceil(rows * fontSize * lineHeight) + this.heightOffset;
+    const paddingTop = parseInt(computedStyles.paddingTop, 10) || 0;
+    const paddingBottom = parseInt(computedStyles.paddingBottom, 10) || 0;
+    return Math.ceil(rows * fontSize * lineHeight) +
+      Math.ceil(paddingTop + paddingBottom) + this.heightOffset;
   }
 
   protected getOffsets(computedStyles) {
