@@ -124,6 +124,10 @@ export class SuprematismSmartTextPage {
     return this.getPopoverEl().isPresent();
   }
 
+  isConfirmIconPresent() {
+    return this.getConfirmIconEl().isPresent();
+  }
+
   $(path) {
     return element(by.css(path));
   }
@@ -151,6 +155,12 @@ export class SuprematismSmartTextPage {
   changeEditTextArea(text) {
     this.getEditAreaEl().clear();
     return this.getEditAreaEl().sendKeys(text);
+  }
+
+  clearEditTextArea() {
+    this.getEditAreaEl().clear();
+    this.getEditAreaEl().sendKeys('');
+    return browser.actions().click(this.getBrowserEditAreaEl()).sendKeys(Key.BACK_SPACE).perform();
   }
 
   hitEnterKeyInTextArea() {

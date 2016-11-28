@@ -18,7 +18,7 @@ export class DefaultStartEmptyComponent {
 })
 export class DefaultComponent {
 
-    text = 'I ponder of something great. My lungs will fill and deflate. They fill with fire, exhale desire. I know it is dire my time today.';
+    text = 'I ponder of something great. My lungs will fill and deflate. They fill with fire, exhale desire. I know it\'s dire my time today.';
     notes = 'Just some notes which doubles as example text underneath the component. FEATURES: Rows + Editable + Placeholder + Default';
 
 }
