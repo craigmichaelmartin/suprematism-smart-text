@@ -54,16 +54,18 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
   editStateSource = new Subject<ActiveType>();
   editState$: Observable<ActiveType> = this.editStateSource
     .startWith('notActive')
-    .merge(
-      this.mode$
-        .filter((mode) => mode === 'edit')
-        .mapTo('active')
-    );
+    .merge(this.mode$.filter((mode) => mode === 'edit').mapTo('active'));
   height: any;
   offsets: any;
   cssText: any;
   substituteCharacter = ' ...';
-  textAreaHasContent: boolean;
+  rawTextSource = new Subject<string>();
+  rawText$: Observable<string> = this.rawTextSource
+    .merge(
+      this.fullText$
+        .combineLatest(this.mode$.filter((mode) => mode === 'display'))
+        .map(([text]) => text)
+    );
   get heightOffset() {
     return this.supreActionsAlign === 'right' ? 0 : 3;
   }
@@ -92,7 +94,6 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     this.setStyleProperties();
     this.ref.detectChanges();
     const initialText = this.nativeEl.textContent.trim();
-    this.textAreaHasContent = !!initialText;
     this.confirmText(initialText);
     this.fullText$.subscribe(this.updatedText.bind(this));
   }
@@ -114,10 +115,6 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     if (event.keyCode === ENTER) {
       this.confirmText(event.target.value);
     }
-  }
-
-  protected editKeyup(event) {
-    this.textAreaHasContent = !!event.target.value;
   }
 
   protected shaveText(text) {

@@ -26,11 +26,11 @@
         (mouseenter)="editStateSource.next('active')"
         (mouseleave)="editStateSource.next('notActive')"
         (keydown)="editKeydown($event)"
-        (keyup)="editKeyup($event)"
+        (keyup)="rawTextSource.next(editText.value)"
     >{{fullText$ | async}}</textarea>
     <div class="SmartText-EditingActions" [ngClass]="supreRows == 1 ? 'SmartText-EditingActions--flat' : supreRows">
       <div class="SmartText-ConfirmIcon"
-          *ngIf="textAreaHasContent || !supreForceValue"
+          *ngIf="(rawText$ | async) || !supreForceValue"
           (click)="confirmText(editText.value)"
       >
         <div class="SmartText-ConfirmFontIcon ion-ios-checkmark"></div>
