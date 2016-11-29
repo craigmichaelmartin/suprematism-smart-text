@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter } from '@angular/core';
+import { AfterContentInit, AfterViewInit, ChangeDetectorRef, ElementRef, EventEmitter, Renderer } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
@@ -12,6 +12,7 @@ export declare type ActiveType = 'active' | 'notActive';
 export declare type ModeType = 'display' | 'edit';
 export declare class SmartTextComponent implements AfterContentInit, AfterViewInit {
     protected ref: ChangeDetectorRef;
+    protected renderer: Renderer;
     el: ElementRef;
     substituteShaveChar: ElementRef;
     editText: ElementRef;
@@ -37,15 +38,15 @@ export declare class SmartTextComponent implements AfterContentInit, AfterViewIn
     offsets: any;
     cssText: any;
     substituteCharacter: string;
-    textAreaHasContent: boolean;
+    rawTextSource: Subject<string>;
+    rawText$: Observable<string>;
     readonly heightOffset: number;
-    constructor(ref: ChangeDetectorRef);
+    constructor(ref: ChangeDetectorRef, renderer: Renderer);
     ngAfterContentInit(): void;
     ngAfterViewInit(): void;
     protected updatedText(text: any): void;
     protected confirmText(text: any): void;
     protected editKeydown(event: any): void;
-    protected editKeyup(event: any): void;
     protected shaveText(text: any): void;
     protected setStyleProperties(): void;
     protected getHeight(computedStyles: any, rows: any): number;
@@ -53,5 +54,5 @@ export declare class SmartTextComponent implements AfterContentInit, AfterViewIn
         padding: any;
         margin: any;
     };
-    protected getCssText(computedStyles: any, el: any, height: any): any;
+    protected getCssText(computedStyles: any, height: any): any;
 }

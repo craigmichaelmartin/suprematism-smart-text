@@ -21,9 +21,10 @@ var shave = require('shave');
 var ENTER = 13;
 var SmartTextComponent = (function () {
     // ------ Constructor ------------------------------------------------------
-    function SmartTextComponent(ref) {
+    function SmartTextComponent(ref, renderer) {
         var _this = this;
         this.ref = ref;
+        this.renderer = renderer;
         this.supreActionsAlign = 'bottom';
         this.supreIsEditable = true;
         this.textUpdated = new core_1.EventEmitter();
@@ -46,10 +47,16 @@ var SmartTextComponent = (function () {
         this.editStateSource = new Subject_1.Subject();
         this.editState$ = this.editStateSource
             .startWith('notActive')
-            .merge(this.mode$
-            .filter(function (mode) { return mode === 'edit'; })
-            .mapTo('active'));
+            .merge(this.mode$.filter(function (mode) { return mode === 'edit'; }).mapTo('active'));
         this.substituteCharacter = ' ...';
+        this.rawTextSource = new Subject_1.Subject();
+        this.rawText$ = this.rawTextSource
+            .merge(this.fullText$
+            .combineLatest(this.mode$.filter(function (mode) { return mode === 'display'; }))
+            .map(function (_a) {
+            var text = _a[0];
+            return text;
+        }));
     }
     Object.defineProperty(SmartTextComponent.prototype, "heightOffset", {
         get: function () {
@@ -82,7 +89,6 @@ var SmartTextComponent = (function () {
         this.setStyleProperties();
         this.ref.detectChanges();
         var initialText = this.nativeEl.textContent.trim();
-        this.textAreaHasContent = !!initialText;
         this.confirmText(initialText);
         this.fullText$.subscribe(this.updatedText.bind(this));
     };
@@ -100,11 +106,8 @@ var SmartTextComponent = (function () {
             this.confirmText(event.target.value);
         }
     };
-    SmartTextComponent.prototype.editKeyup = function (event) {
-        this.textAreaHasContent = !!event.target.value;
-    };
     SmartTextComponent.prototype.shaveText = function (text) {
-        this.nativeEl.textContent = text;
+        this.renderer.setElementProperty(this.nativeEl, 'textContent', text);
         if (!this.supreRows) {
             return;
         }
@@ -115,12 +118,12 @@ var SmartTextComponent = (function () {
         var shaveCharNativeEl = this.nativeEl.querySelector('.js-shave-char');
         var subShaveCharNativeEl = this.substituteShaveChar.nativeElement;
         if (shaveCharNativeEl) {
-            subShaveCharNativeEl.style.display = 'inline-block';
-            shaveCharNativeEl.textContent = '';
+            this.renderer.setElementStyle(subShaveCharNativeEl, 'display', 'inline-block');
+            this.renderer.setElementProperty(shaveCharNativeEl, 'textContent', '');
             shaveCharNativeEl.append(subShaveCharNativeEl);
         }
         else {
-            subShaveCharNativeEl.style.display = 'none';
+            this.renderer.setElementStyle(subShaveCharNativeEl, 'display', 'none');
         }
         this.ref.detectChanges();
     };
@@ -128,7 +131,7 @@ var SmartTextComponent = (function () {
         var computedStyles = window.getComputedStyle(this.nativeEl);
         this.height = this.getHeight(computedStyles, this.supreRows);
         this.offsets = this.getOffsets(computedStyles);
-        this.cssText = this.getCssText(computedStyles, this.nativeEl, this.height);
+        this.cssText = this.getCssText(computedStyles, this.height);
     };
     SmartTextComponent.prototype.getHeight = function (computedStyles, rows) {
         if (!rows) {
@@ -147,13 +150,15 @@ var SmartTextComponent = (function () {
             margin: computedStyles.margin
         };
     };
-    SmartTextComponent.prototype.getCssText = function (computedStyles, el, height) {
-        var style = el.style;
-        this.nativeEl.style.padding = 0;
-        this.nativeEl.style.margin = 0;
-        this.nativeEl.style.height = height + "px";
+    SmartTextComponent.prototype.getCssText = function (computedStyles, height) {
+        // Override styles that computedStyles will reflect, and then
+        // change them back after capturing the new computed styles.
+        var style = this.nativeEl.style;
+        this.renderer.setElementStyle(this.nativeEl, 'padding', '0');
+        this.renderer.setElementStyle(this.nativeEl, 'margin', '0');
+        this.renderer.setElementStyle(this.nativeEl, 'height', height + "px");
         var cssText = computedStyles.cssText;
-        this.nativeEl.style = style;
+        this.renderer.setElementProperty(this.nativeEl, 'style', style);
         return cssText;
     };
     __decorate([
@@ -202,7 +207,7 @@ var SmartTextComponent = (function () {
             template: require('./smart-text.component.html'),
             styles: [require('./smart-text.component.css')]
         }), 
-        __metadata('design:paramtypes', [core_1.ChangeDetectorRef])
+        __metadata('design:paramtypes', [core_1.ChangeDetectorRef, core_1.Renderer])
     ], SmartTextComponent);
     return SmartTextComponent;
 }());
