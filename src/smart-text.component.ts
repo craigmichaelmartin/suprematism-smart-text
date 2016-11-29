@@ -1,5 +1,6 @@
 import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component,
-  ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+  ElementRef, EventEmitter, Input, Renderer, Output, ViewChild
+  } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/startWith';
@@ -73,7 +74,8 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
 
   // ------ Constructor ------------------------------------------------------
 
-  constructor(protected ref: ChangeDetectorRef) {}
+  constructor(protected ref: ChangeDetectorRef,
+              protected renderer: Renderer) {}
 
 
   // ------ Lifecycle Hooks ---------------------------------------------------
@@ -118,7 +120,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
   }
 
   protected shaveText(text) {
-    this.nativeEl.textContent = text;
+    this.renderer.setElementProperty(this.nativeEl, 'textContent', text);
     if (!this.supreRows) {
       return;
     }
@@ -129,11 +131,11 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     const shaveCharNativeEl = this.nativeEl.querySelector('.js-shave-char');
     let subShaveCharNativeEl = this.substituteShaveChar.nativeElement;
     if (shaveCharNativeEl) {
-      subShaveCharNativeEl.style.display = 'inline-block';
-      shaveCharNativeEl.textContent = '';
+      this.renderer.setElementStyle(subShaveCharNativeEl, 'display', 'inline-block');
+      this.renderer.setElementProperty(shaveCharNativeEl, 'textContent', '');
       shaveCharNativeEl.append(subShaveCharNativeEl);
     } else {
-      subShaveCharNativeEl.style.display = 'none';
+      this.renderer.setElementStyle(subShaveCharNativeEl, 'display', 'none');
     }
     this.ref.detectChanges();
   }
@@ -142,7 +144,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     const computedStyles = window.getComputedStyle(this.nativeEl);
     this.height = this.getHeight(computedStyles, this.supreRows);
     this.offsets = this.getOffsets(computedStyles);
-    this.cssText = this.getCssText(computedStyles, this.nativeEl, this.height);
+    this.cssText = this.getCssText(computedStyles, this.height);
   }
 
   protected getHeight(computedStyles, rows) {
@@ -164,13 +166,15 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     };
   }
 
-  protected getCssText(computedStyles, el, height) {
-    const style = el.style;
-    this.nativeEl.style.padding = 0;
-    this.nativeEl.style.margin = 0;
-    this.nativeEl.style.height = `${height}px`;
+  protected getCssText(computedStyles, height) {
+    // Override styles that computedStyles will reflect, and then
+    // change them back after capturing the new computed styles.
+    const style = this.nativeEl.style;
+    this.renderer.setElementStyle(this.nativeEl, 'padding', '0');
+    this.renderer.setElementStyle(this.nativeEl, 'margin', '0');
+    this.renderer.setElementStyle(this.nativeEl, 'height', `${height}px`);
     const cssText = computedStyles.cssText;
-    this.nativeEl.style = style;
+    this.renderer.setElementProperty(this.nativeEl, 'style', style);
     return cssText;
   }
 
