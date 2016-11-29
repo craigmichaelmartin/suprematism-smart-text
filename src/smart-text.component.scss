@@ -87,6 +87,7 @@ $blue:    #0089d0;
   width: 100% !important;
   overflow: hidden !important;
   resize: none !important;
+  overflow-y: scroll !important;
 }
 .SmartText-Edit.is-notActive .SmartText-EditArea {
   border: 1px solid #cccccc !important;
