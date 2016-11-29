@@ -1,4 +1,5 @@
-$blue:    #0089d0;
+$blue:            #0089d0;
+$scrollbar-width: 17px;
 
 /* 
    NOTE: The text area mirrors the original element by
@@ -9,10 +10,14 @@ $blue:    #0089d0;
 :host {
   display: block;
 }
+.SmartText {
+  width: 100%;
+}
 .SmartText-Display {
   overflow: hidden;
   display: flex;
   border: 1px solid white;
+  width: calc(100% - #{$scrollbar-width});
 }
 .SmartText.is-rightAligned .SmartText-Display {
   align-items: center;
@@ -87,7 +92,7 @@ $blue:    #0089d0;
   width: 100% !important;
   overflow: hidden !important;
   resize: none !important;
-  overflow-y: scroll !important;
+  overflow-y: auto !important;
 }
 .SmartText-Edit.is-notActive .SmartText-EditArea {
   border: 1px solid #cccccc !important;
