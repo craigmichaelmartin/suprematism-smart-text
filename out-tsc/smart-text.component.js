@@ -163,7 +163,6 @@ var SmartTextComponent = (function () {
     };
     SmartTextComponent.prototype.onMouseoverDisplay = function (event) {
         if (this.supreIsEditable) {
-            console.log(event.target.classList.contains('popover'));
             if (event.target.classList.contains('popover')) {
                 this.displayStateSource.next('notActive');
             }

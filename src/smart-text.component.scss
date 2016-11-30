@@ -116,6 +116,10 @@ $scrollbar-width: 17px;
   display: inline-block;
   margin-top: 8px;
 }
+.SmartText.is-bottomAligned .SmartText-EditingActions:after {
+  content: 'x';
+  visibility: hidden;
+}
 .SmartText-EditingActions--flat {
   flex-direction: row;
 }

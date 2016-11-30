@@ -180,7 +180,6 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
 
   protected onMouseoverDisplay(event) {
     if (this.supreIsEditable) {
-      console.log(event.target.classList.contains('popover'));
       if (event.target.classList.contains('popover')) {
         this.displayStateSource.next('notActive');
       } else {
