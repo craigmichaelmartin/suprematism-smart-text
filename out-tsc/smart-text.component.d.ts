@@ -55,4 +55,6 @@ export declare class SmartTextComponent implements AfterContentInit, AfterViewIn
         margin: any;
     };
     protected getCssText(computedStyles: any, height: any): any;
+    protected onMouseoverDisplay(event: any): void;
+    protected onClickDisplay(event: any): void;
 }

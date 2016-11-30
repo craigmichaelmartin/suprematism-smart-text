@@ -178,4 +178,23 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
     return cssText;
   }
 
+  protected onMouseoverDisplay(event) {
+    if (this.supreIsEditable) {
+      console.log(event.target.classList.contains('popover'));
+      if (event.target.classList.contains('popover')) {
+        this.displayStateSource.next('notActive');
+      } else {
+        this.displayStateSource.next('active');
+      }
+    }
+  }
+
+  protected onClickDisplay(event) {
+    if (this.supreIsEditable) {
+      if (!event.target.classList.contains('popover')) {
+        this.modeSource.next('edit');
+      }
+    }
+  }
+
 }

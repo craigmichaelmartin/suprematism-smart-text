@@ -161,6 +161,24 @@ var SmartTextComponent = (function () {
         this.renderer.setElementProperty(this.nativeEl, 'style', style);
         return cssText;
     };
+    SmartTextComponent.prototype.onMouseoverDisplay = function (event) {
+        if (this.supreIsEditable) {
+            console.log(event.target.classList.contains('popover'));
+            if (event.target.classList.contains('popover')) {
+                this.displayStateSource.next('notActive');
+            }
+            else {
+                this.displayStateSource.next('active');
+            }
+        }
+    };
+    SmartTextComponent.prototype.onClickDisplay = function (event) {
+        if (this.supreIsEditable) {
+            if (!event.target.classList.contains('popover')) {
+                this.modeSource.next('edit');
+            }
+        }
+    };
     __decorate([
         core_1.ViewChild('displayText'), 
         __metadata('design:type', core_1.ElementRef)
