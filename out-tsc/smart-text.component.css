@@ -34,7 +34,7 @@
 
 .SmartText.is-bottomAligned .SmartText-EditIcon {
   text-align: left;
-  margin-top: 3px; }
+  margin-top: 8px; }
 
 .SmartText.is-bottomAligned .SmartText-EditFontIcon {
   display: inline-block; }
@@ -109,7 +109,7 @@
 
 .SmartText.is-bottomAligned .SmartText-EditingActions {
   display: inline-block;
-  margin-top: 3px; }
+  margin-top: 8px; }
 
 .SmartText-EditingActions--flat {
   flex-direction: row; }
