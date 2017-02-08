@@ -80,4 +80,4 @@ var SafeResourceUrlPipe = (function () {
     return SafeResourceUrlPipe;
 }());
 exports.SafeResourceUrlPipe = SafeResourceUrlPipe;
-//# sourceMappingURL=/Users/jacobstewart/src/suprematism-smart-text/src/src/safe.pipe.js.map
+//# sourceMappingURL=/Users/craigmartin/projects/suprematism-smart-text/src/safe.pipe.js.map
