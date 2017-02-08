@@ -229,4 +229,4 @@ var SmartTextComponent = (function () {
     return SmartTextComponent;
 }());
 exports.SmartTextComponent = SmartTextComponent;
-//# sourceMappingURL=/Users/craigmartin/projects/suprematism-smart-text/src/smart-text.component.js.map
+//# sourceMappingURL=/Users/jacobstewart/src/suprematism-smart-text/src/src/smart-text.component.js.map

@@ -42,4 +42,4 @@ var SmartTextModule = (function () {
     return SmartTextModule;
 }());
 exports.SmartTextModule = SmartTextModule;
-//# sourceMappingURL=/Users/craigmartin/projects/suprematism-smart-text/src/index.js.map
+//# sourceMappingURL=/Users/jacobstewart/src/suprematism-smart-text/src/src/index.js.map

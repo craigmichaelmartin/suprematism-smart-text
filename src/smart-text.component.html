@@ -46,7 +46,8 @@
   <div style="display: none">
     <span #substituteShaveChar
         class="popover SmartText-popover"
-        [suprePopoverBody]='(fullText$ | async)'
+        [supreTooltip]="' '"
+        [content]="(fullText$ | async)"
     >{{substituteCharacter}}</span>
   </div>
 </div>
