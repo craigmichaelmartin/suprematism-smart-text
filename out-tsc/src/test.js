@@ -19,4 +19,4 @@ Promise.all([
     .then(function () { return require.context('./', true, /\.spec\.ts/); })
     .then(function (context) { return context.keys().map(context); })
     .then(__karma__.start, __karma__.error);
-//# sourceMappingURL=/Users/craigmartin/projects/suprematism-smart-text/src/test.js.map
+//# sourceMappingURL=/Users/craigmartin/projects/suprematism-smart-text/src/src/test.js.map
