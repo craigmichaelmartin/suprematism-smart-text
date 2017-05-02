@@ -24,6 +24,7 @@
     "d3": "^4.7.4",
     "rxjs": "^5.1.0",
     "shave": "^0.2.0",
+    "suprematism-style-guide": "github:CINBCUniversal/suprematism-style-guide",
     "suprematism-popover": "github:CINBCUniversal/suprematism-popover",
     "zone.js": "^0.8.4"
   },
