@@ -1,37 +1,51 @@
 {
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "version": "1.0.0-beta.16",
     "name": "suprematism-smart-text"
   },
   "apps": [
     {
-      "root": "src",
+      "stylePreprocessorOptions": {
+        "includePaths": [
+          "../node_modules/suprematism-style-guide/dist",
+          "../node_modules/bootstrap-sass/assets/stylesheets/"
+        ]
+      },
+      "root": "example",
       "outDir": "dist",
-      "assets": "assets",
-      "index": "../example/index.html",
-      "main": "../example/main.ts",
+      "assets": [],
+      "index": "index.html",
+      "main": "main.ts",
+      "polyfills": "polyfills.ts",
       "test": "test.ts",
-      "tsconfig": "tsconfig.json",
+      "tsconfig": "tsconfig.app.json",
+      "testTsconfig": "tsconfig.spec.json",
       "prefix": "supre",
-      "mobile": false,
-      "styles": [
-        "assets/global.scss"
-      ],
+      "styles": [],
       "scripts": [],
+      "environmentSource": "environments/environment.ts",
       "environments": {
-        "source": "environments/environment.ts",
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
     }
   ],
-  "addons": [],
-  "packages": [],
   "e2e": {
     "protractor": {
       "config": "./protractor.conf.js"
     }
   },
+  "lint": [
+    {
+      "project": "example/tsconfig.app.json"
+    },
+    {
+      "project": "example/tsconfig.spec.json"
+    },
+    {
+      "project": "e2e/tsconfig.e2e.json"
+    }
+  ],
   "test": {
     "karma": {
       "config": "./karma.conf.js"
@@ -39,6 +53,6 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "prefixInterfaces": false
+    "component": {}
   }
 }
