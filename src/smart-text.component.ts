@@ -19,7 +19,7 @@ export type ModeType = 'display' | 'edit';
 @Component({
   selector: 'supre-smart-text',
   template: require('./smart-text.component.html'),
-  styles: [require('./smart-text.component.css')]
+  styles: [require('./smart-text.component.scss')]
 })
 export class SmartTextComponent implements AfterContentInit, AfterViewInit {
 
