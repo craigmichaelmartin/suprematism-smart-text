@@ -137,13 +137,11 @@ $scrollbar-width: 17px;
 }
 .SmartText-popover * {
   color: black !important;
+  cursor: default;
 }
 .popover-content {
   color: black !important;
 }
 ::-webkit-input-placeholder {
   opacity: .5;
-}
-.popover {
-  cursor: default;
 }
