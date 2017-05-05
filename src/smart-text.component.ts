@@ -10,7 +10,7 @@ import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/withLatestFrom';
-const shave = require('shave');
+declare let shave: any;
 
 const ENTER = 13;
 export type ActiveType = 'active' | 'notActive';
