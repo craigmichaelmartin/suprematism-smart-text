@@ -31,12 +31,13 @@ A component for smart text
   - Force Value: Specify that a value must be provided - an action cannot be taken to leave the editable area when there is no value. If no initial value is given, component will begin as editable.
 
 ##### Directives
-- `supreRows: number` - No default. If not provided, text will never be shaved.
+- `supreDisplayRows: number` - No default. If not provided, text will never be shaved. If provided text will be shaved at the given number of lines.
+- `supreEditRows: number` - No default. If not provided, edit area will expand. If provided testarea will begin scrolling at the given number of lines.
 - `supreIsEditable: boolean` - Defaults to true.
 - `suprePlaceholder: string` - No default. If not provided, no placeholder will be used.
 - `supreDefaultText: string` - No default. If not provided, no default text will be used.
 - `supreForceValue: boolean` - Defaults to false.
-- `supreActionsAlign: 'right'|'bottom'` - Defaults to bottom.
+- `popout: boolean` - Defaults to false. If true, text will be updated in a dialog.
 
 ##### Events
 - `textUpdated: string` - The confirmed text.
@@ -44,15 +45,14 @@ A component for smart text
 
 ## States
 The smart text component has these states:
-  - `SmartText.is-display`|`SmartText.is-edit` - which mode the smart text is in.
-  - `SmartText.is-bottomAligned`|`SmartText.is-rightAligned` - which alignment style the smart text is configured for.
+  - `SmartText.is-display`|`SmartText.is-edit`|`SmartText.is-popout` - which mode the smart text is in.
   - `SmartText-Display.is-active`|`SmartText-Display.is-notActive` - whether the display is active (focused).
   - `SmartText-Edit.is-active`|`SmartText-Edit.is-notActive` - whether the edit is active (focused).
 
 
 ## Example
 ```html
-<supre-smart-text supreRows=2 suprePlaceholder="Please enter title" [supreDefaultText]="Default Title (1)">
+<supre-smart-text supreDisplayRows=2 supreEditRows=2 suprePlaceholder="Please enter title" [supreDefaultText]="Default Title (1)">
   <div class="header">My Award Winning Title</div>
 </supre-smart-text>
 ```
