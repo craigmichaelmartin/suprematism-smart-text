@@ -21,7 +21,9 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "supre",
-      "styles": [],
+      "styles": [
+        "../node_modules/suprematism-style-guide/dist/suprematism.css"
+      ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
       "environments": {

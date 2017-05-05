@@ -15,7 +15,7 @@ export class AllComponent {
 
   shortTitle: string = "This is a short title. It's not terribly long.";
 
-  belowText: string = 'Here is example text underneith. La di dah.';
+  belowText: string = 'Here is example text underneath. La di dah.';
 
   placeholderText: string = 'Please enter a title name';
 
