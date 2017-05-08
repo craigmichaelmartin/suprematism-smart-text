@@ -1,5 +1,5 @@
 import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component,
-  ElementRef, EventEmitter, Input, Renderer, Output, ViewChild
+  ElementRef, EventEmitter, Input, Renderer, Output, ViewChild, OnChanges
   } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
@@ -21,7 +21,7 @@ export type ModeType = 'display' | 'edit' | 'popout';
   template: require('./smart-text.component.html'),
   styles: [require('./smart-text.component.scss')]
 })
-export class SmartTextComponent implements AfterContentInit, AfterViewInit {
+export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnChanges {
 
   // ------ Properties -------------------------------------------------------
 
@@ -91,7 +91,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
 
   // ------ Lifecycle Hooks ---------------------------------------------------
 
-  ngAfterContentInit() {
+  public ngAfterContentInit() {
     this.nativeEl = this.el.nativeElement.children[0];
     this.fullText$.subscribe(this.shaveText.bind(this));
     this.mode$
@@ -103,12 +103,17 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit {
       .map(([, text]) => text)
       .subscribe(this.shaveText.bind(this));
   }
-  ngAfterViewInit() {
+  public ngAfterViewInit() {
     this.setStyleProperties();
     this.ref.detectChanges();
     const initialText = this.nativeEl.textContent.trim();
     this.confirmText(initialText);
     this.fullText$.subscribe(this.updatedText.bind(this));
+  }
+  public ngOnChanges(changes) {
+    if (changes.supreDefaultText.currentValue && changes.supreDefaultText.previousValue !== changes.supreDefaultText.currentValue) {
+      this.confirmText(changes.supreDefaultText.currentValue);
+    }
   }
 
 
