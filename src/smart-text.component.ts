@@ -111,7 +111,8 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
     this.fullText$.subscribe(this.updatedText.bind(this));
   }
   public ngOnChanges(changes) {
-    if (changes.supreDefaultText.currentValue && changes.supreDefaultText.previousValue !== changes.supreDefaultText.currentValue) {
+    if (changes && changes.supreDefaultText && changes.supreDefaultText.currentValue
+      && changes.supreDefaultText.previousValue !== changes.supreDefaultText.currentValue) {
       this.confirmText(changes.supreDefaultText.currentValue);
     }
   }
