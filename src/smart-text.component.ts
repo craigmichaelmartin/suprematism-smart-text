@@ -128,6 +128,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
     this.fullTextSource.next(text);
     this.editStateSource.next('notActive');
     this.modeSource.next('display');
+    this.ref.detectChanges();
   }
 
   protected editKeydown(event) {
