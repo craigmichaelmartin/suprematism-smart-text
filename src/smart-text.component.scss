@@ -21,6 +21,7 @@
 .SmartText-Display.is-active {
   color: $aqua;
   -webkit-text-fill-color: $aqua;
+  cursor: pointer;
 }
 .SmartText-DisplayText {
   width: 100% !important;
@@ -99,4 +100,11 @@
 }
 /deep/ supre-smart-text .SmartText-Display--unshaved + supre-tooltip {
   display: none !important;
+}
+.SmartText-EditIcon {
+  cursor: pointer;
+  visibility: hidden;
+}
+.SmartText.is-display .SmartText-Display.is-active .SmartText-EditIcon {
+  visibility: visible;
 }

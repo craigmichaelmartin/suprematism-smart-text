@@ -9,11 +9,13 @@
       (mouseleave)="supreIsEditable && displayStateSource.next('notActive')"
       (click)="onClickDisplay($event)"
       (window:resize)="resizeSource.next('resize')"
-      [supreTooltip]="' '"
-      [content]="(fullText$ | async)"
+      [supreTooltip]="(fullText$ | async)"
   >
     <div #displayText class="SmartText-DisplayText">
       <ng-content></ng-content>
+    </div>
+    <div class="SmartText-EditIcon">
+      <div class="u-supre-icon u-supre-icon--edit" (click)="modeSource.next('edit')"></div>
     </div>
   </div>
   <div class="SmartText-Edit"
