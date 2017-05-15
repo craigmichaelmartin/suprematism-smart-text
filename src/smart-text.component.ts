@@ -109,6 +109,10 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
     const initialText = this.nativeEl.textContent.trim();
     this.confirmText(initialText);
     this.fullText$.subscribe(this.updatedText.bind(this));
+
+    if (this.supreForceValue) {
+      this.prepareTracker();
+    }
   }
   public ngOnChanges(changes) {
     if (changes && changes.supreDefaultText && changes.supreDefaultText.currentValue
@@ -241,11 +245,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
   protected onClickDisplay(event) {
     if (this.supreIsEditable) {
       if (!event.target.classList.contains('popover')) {
-        setTimeout(() => {
-          this.trackerCSS = this.getTrackerCss(this.height);
-          this.trackHeightRows(this.editText.nativeElement, this.textareaTracker.nativeElement);
-          this.editText.nativeElement.focus();
-        }, 0);
+        this.prepareTracker(true);
         if (this.popout) {
           this.popoutCSS = this.getPopoutCss();
           this.modeSource.next('popout');
@@ -254,6 +254,16 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
         }
       }
     }
+  }
+
+  public prepareTracker(focusOnElement=false) {
+    setTimeout(() => {
+      this.trackerCSS = this.getTrackerCss(this.height);
+      this.trackHeightRows(this.editText.nativeElement, this.textareaTracker.nativeElement);
+      if (focusOnElement) {
+        this.editText.nativeElement.focus();
+      }
+    }, 0);
   }
 
   public trackHeightRows(inputEl: HTMLTextAreaElement, trackingEl: HTMLElement) {
