@@ -3,6 +3,7 @@ import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component,
   } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/startWith';
 import 'rxjs/add/operator/combineLatest';
 import 'rxjs/add/operator/map';
@@ -10,7 +11,8 @@ import 'rxjs/add/operator/mapTo';
 import 'rxjs/add/operator/merge';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/withLatestFrom';
-declare let shave: any;
+import { ISubscription } from 'rxjs/Subscription';
+declare const shave: any;
 
 const ENTER = 13;
 export type ActiveType = 'active' | 'notActive';
@@ -37,8 +39,10 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
   @Input() supreForceValue: boolean;
   @Input() supreIsEditable = true;
   @Input() popout = false;
+  @Input() reshave: Observable<'ping'> = Observable.of('ping');
   @Output() textUpdated = new EventEmitter();
 
+  subscriptions: Array<ISubscription> = [];
   nativeEl: any;
   height: any;
   offsets: any;
@@ -93,32 +97,47 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
 
   public ngAfterContentInit() {
     this.nativeEl = this.el.nativeElement.children[0];
-    this.fullText$.subscribe(this.shaveText.bind(this));
-    this.mode$
-      .filter((mode) => mode === 'display')
-      .withLatestFrom(this.fullText$)
-      .map(([, text]) => text)
-      .subscribe((text) => this.editText.nativeElement.value = text);
-    this.resize$.combineLatest(this.fullText$)
-      .map(([, text]) => text)
-      .subscribe(this.shaveText.bind(this));
+    this.subscriptions.push(...[
+      this.fullText$.subscribe(this.shaveText.bind(this)),
+      this.mode$
+        .filter((mode) => mode === 'display')
+        .withLatestFrom(this.fullText$)
+        .map(([, text]) => text)
+        .subscribe((text) => this.editText.nativeElement.value = text),
+      this.resize$.combineLatest(this.fullText$)
+        .map(([, text]) => text)
+        .subscribe(this.shaveText.bind(this)),
+      this.reshave.combineLatest(this.fullText$)
+        .map(([, text]) => text)
+        .subscribe((text) =>
+          setTimeout(() => this.shaveText(text), 0)
+        ),
+    ]);
   }
+
   public ngAfterViewInit() {
     this.setStyleProperties();
     this.ref.detectChanges();
     const initialText = this.nativeEl.textContent.trim();
     this.confirmText(initialText);
-    this.fullText$.subscribe(this.updatedText.bind(this));
+    this.subscriptions.push(...[
+      this.fullText$.subscribe(this.updatedText.bind(this)),
+    ]);
 
     if (this.supreForceValue) {
       this.prepareTracker();
     }
   }
+
   public ngOnChanges(changes) {
     if (changes && changes.supreDefaultText && changes.supreDefaultText.currentValue
       && changes.supreDefaultText.previousValue !== changes.supreDefaultText.currentValue) {
       this.confirmText(changes.supreDefaultText.currentValue);
     }
+  }
+
+  public ngOnDestroy() {
+    this.destroySubscribers();
   }
 
 
@@ -152,7 +171,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
 
     shave(this.nativeEl, this.getHeight(window.getComputedStyle(this.nativeEl), this.supreDisplayRows), options);
     const shaveCharNativeEl = this.nativeEl.querySelector('.js-shave-char');
-    let subShaveCharNativeEl = this.substituteShaveChar.nativeElement;
+    const subShaveCharNativeEl = this.substituteShaveChar.nativeElement;
     if (shaveCharNativeEl) {
       this.shaved = true;
       this.renderer.setElementStyle(subShaveCharNativeEl, 'display', 'inline-block');
@@ -256,7 +275,11 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
     }
   }
 
-  public prepareTracker(focusOnElement=false) {
+  protected destroySubscribers() {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe());
+  }
+
+  public prepareTracker(focusOnElement = false) {
     setTimeout(() => {
       this.trackerCSS = this.getTrackerCss(this.height);
       this.trackHeightRows(this.editText.nativeElement, this.textareaTracker.nativeElement);
