@@ -43,6 +43,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
   @Output() textUpdated = new EventEmitter();
 
   subscriptions: Array<ISubscription> = [];
+  timeout: any;
   nativeEl: any;
   height: any;
   offsets: any;
@@ -110,7 +111,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
       this.reshave.combineLatest(this.fullText$)
         .map(([, text]) => text)
         .subscribe((text) =>
-          setTimeout(() => this.shaveText(text), 0)
+          this.timeout = setTimeout(() => this.shaveText(text))
         ),
     ]);
   }
@@ -137,6 +138,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
   }
 
   public ngOnDestroy() {
+    clearTimeout(this.timeout);
     this.destroySubscribers();
   }
 
