@@ -1,6 +1,7 @@
-import { AfterContentInit, AfterViewInit, ChangeDetectorRef, Component,
-  ElementRef, EventEmitter, Input, Renderer, Output, ViewChild, OnChanges
-  } from '@angular/core';
+import {
+  AfterContentInit, AfterViewInit, ChangeDetectorRef, Component,
+  ElementRef, EventEmitter, Input, Renderer, Output, ViewChild, OnChanges, OnDestroy
+} from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -23,7 +24,7 @@ export type ModeType = 'display' | 'edit' | 'popout';
   template: require('./smart-text.component.html'),
   styles: [require('./smart-text.component.scss')]
 })
-export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnChanges {
+export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnChanges, OnDestroy {
 
   // ------ Properties -------------------------------------------------------
 
@@ -44,6 +45,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
 
   subscriptions: Array<ISubscription> = [];
   timeout: any;
+  resizeTimeout: number;
   nativeEl: any;
   height: any;
   offsets: any;
@@ -107,7 +109,9 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
         .subscribe((text) => this.editText.nativeElement.value = text),
       this.resize$.combineLatest(this.fullText$)
         .map(([, text]) => text)
-        .subscribe(this.shaveText.bind(this)),
+        .subscribe((text) =>
+          this.resizeTimeout = setTimeout(() => this.shaveText(text))
+        ),
       this.reshave.combineLatest(this.fullText$)
         .map(([, text]) => text)
         .subscribe((text) =>
@@ -139,6 +143,7 @@ export class SmartTextComponent implements AfterContentInit, AfterViewInit, OnCh
 
   public ngOnDestroy() {
     clearTimeout(this.timeout);
+    clearTimeout(this.resizeTimeout);
     this.destroySubscribers();
   }
 
